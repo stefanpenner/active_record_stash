@@ -10,10 +10,10 @@ Simple little ActiveRecord plugin which allows a subset of a models attributes t
     t.text     "data"
   end
 
-  # we can invoke #stash as follows
-
+  # we can invoke the stash helper as follows
   stash <fields..>, :in => <column to stash the fields into>
 
+  #full example
   class Email < ActiveRecord::Base
     validates_presence_of :name, :phone, :email, :content
   
