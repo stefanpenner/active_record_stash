@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "active_record_stash"
-    gem.summary = %Q{allow attributes of a serialized column to act as first class activerecord attributes}
-    gem.description = %Q{more}
+    gem.summary = %Q{allow attributes stored in serialized columns to be first class active record attributes}
+    gem.description = %Q{provide validations and form helpers for attributes stored in serialized ActiveRecord column}
     gem.email = "stefan.penner@gmail.com"
     gem.homepage = "http://github.com/stefanpenner/active_record_stash"
     gem.authors = ["Stefan Penner"]

@@ -1,6 +1,5 @@
-
 module ActiveRecord
-  module StashInSerializedHash
+  module Stash
 
     extend ActiveSupport::Concern
 
@@ -60,6 +59,4 @@ module ActiveRecord
   end
 end
 
-ActiveRecord::Base.send(:include,  ActiveRecord::StashInSerializedHash)
-
-
+ActiveRecord::Base.send(:include,  ActiveRecord::Stash)
