@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Penner"]
   s.date = %q{2010-06-20}
-  s.description = %q{provide validations and form helpers for attributes stored in serialized ActiveRecord column}
+  s.description = %q{provide validations and form helper functionality to attributes stored in serialized ActiveRecord columns}
   s.email = %q{stefan.penner@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
