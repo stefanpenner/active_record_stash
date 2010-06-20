@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 conn = { 
   :adapter => 'sqlite3',
   :database => 'activerecord_unittest',
-  :database => '../testing.sqlite3',
+  :database => 'spec/testing.sqlite3',
   :encoding => 'utf8' 
 }
 
@@ -56,11 +56,10 @@ describe ActiveRecord::Stash do
       end
 
       it "does not have an empty data column" do
-        @email.data.should_not be_nil
+        @email.data.should_not be_empty
       end
 
       it "has the correct serialized data in the serialized column" do
-        @email.data.should_not be_empty
 
         @email.data.should eql({
           :phone        =>  "123456789", 
@@ -68,6 +67,67 @@ describe ActiveRecord::Stash do
           :postal_code  =>  "13244"
         })
       end
+    end
+  end
+
+  describe "object creation" do
+    before :all do
+      @email = Email.create(
+        :phone        => "123456789", 
+        :address      => "1234 Apple way", 
+        :postal_code  => "13244"
+      )
+    end
+
+    it "is a valid object" do
+      @email.should be_valid
+    end
+
+    it "still has the correct forward facing attributes" do
+      @email.phone.should match("123456789")
+      @email.address.should match("1234 Apple way")
+      @email.postal_code.should match("13244")
+    end
+    it "does not have an empty data column" do
+      @email.data.should_not be_empty
+    end
+
+    it "has the correct serialized data in the serialized column" do
+
+      @email.data.should eql({
+        :phone        =>  "123456789", 
+        :address      =>  "1234 Apple way", 
+        :postal_code  =>  "13244"
+      })
+    end
+    describe "#update_attributes" do
+      before :all do
+        @email.update_attributes({
+          :phone   => "2222222",
+          :address => "4321 yaw elppa"
+        })
+      end
+      it "has no errors" do
+        @email.errors.any?.should be_false
+      end
+
+      it "does not have an empty data column" do
+        @email.data.should_not be_empty
+      end
+
+      it "has all the expected contents of the data column" do
+        @email.data.should eql({
+          :phone   => "2222222",
+          :address => "4321 yaw elppa",
+          :postal_code => "13244"
+        })
+      end
+
+    it "still has the correct forward facing attributes" do
+      @email.phone.should match("2222222")
+      @email.address.should match("4321 yaw elppa")
+      @email.postal_code.should match("13244")
+    end
     end
   end
 end
