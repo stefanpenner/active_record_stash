@@ -1,6 +1,31 @@
-= active_record_stash
+= Schemaless Attributes on an ActiveRecord model
 
-Description goes here.
+Simple little ActiveRecord plugin which allows a subset of a models attributes to reside in a serialized column, while still working with form helpers and validators.
+
+  # Assuming a Email schema looks like
+  create_table "emails", :force => true do |t|
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "data"
+  end
+
+  # we can invoke #stash as follows
+
+  stash <fields..>, :in => <column to stash the fields into>
+
+  class Email < ActiveRecord::Base
+    validates_presence_of :name, :phone, :email, :content
+  
+    stash :phone, :name, :content :in => :data
+  end
+  
+  # validations, and form helpers now work on stashed attributes
+
+= Getting Started
+  
+  #Gemfile
+  gem "active_record_stash"
 
 == Note on Patches/Pull Requests
  

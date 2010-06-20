@@ -100,6 +100,7 @@ describe ActiveRecord::Stash do
         :postal_code  =>  "13244"
       })
     end
+
     describe "#update_attributes" do
       before :all do
         @email.update_attributes({
