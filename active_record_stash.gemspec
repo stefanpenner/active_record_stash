@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{active_record_stash}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Penner"]
-  s.date = %q{2010-06-17}
-  s.description = %q{more}
+  s.date = %q{2010-06-20}
+  s.description = %q{provide validations and form helpers for attributes stored in serialized ActiveRecord column}
   s.email = %q{stefan.penner@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "Gemfile",
+     "Gemfile.lock",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
@@ -34,7 +36,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{allow attributes of a serialized column to act as first class activerecord attributes}
+  s.summary = %q{allow attributes stored in serialized columns to be first class active record attributes}
   s.test_files = [
     "spec/active_record_stash_spec.rb",
      "spec/spec_helper.rb"
