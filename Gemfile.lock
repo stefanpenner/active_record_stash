@@ -1,81 +1,58 @@
---- 
-dependencies: 
-  ruby-debug: 
-    group: 
-    - :default
-    version: ">= 0"
-  activerecord: 
-    group: 
-    - :default
-    version: = 3.0.0.beta4
-  sqlite3-ruby: 
-    group: 
-    - :default
-    version: ~> 1.3.0
-    require: 
-    - sqlite3
-  rake: 
-    group: 
-    - :default
-    version: ">= 0"
-  rspec: 
-    group: 
-    - :default
-    version: ">= 0"
-  activemodel: 
-    group: 
-    - :default
-    version: = 3.0.0.beta4
-  jeweler: 
-    group: 
-    - :default
-    version: ">= 0"
-  activesupport: 
-    group: 
-    - :default
-    version: = 3.0.0.beta4
-    require: 
-    - active_support
-specs: 
-- rake: 
-    version: 0.8.7
-- activesupport: 
-    version: 3.0.0.beta4
-- builder: 
-    version: 2.1.2
-- i18n: 
-    version: 0.4.1
-- activemodel: 
-    version: 3.0.0.beta4
-- arel: 
-    version: 0.4.0
-- tzinfo: 
-    version: 0.3.22
-- activerecord: 
-    version: 3.0.0.beta4
-- columnize: 
-    version: 0.3.1
-- json_pure: 
-    version: 1.4.3
-- gemcutter: 
-    version: 0.5.0
-- git: 
-    version: 1.2.5
-- rubyforge: 
-    version: 2.0.4
-- jeweler: 
-    version: 1.4.0
-- linecache: 
-    version: "0.43"
-- rspec: 
-    version: 1.3.0
-- ruby-debug-base: 
-    version: 0.10.3
-- ruby-debug: 
-    version: 0.10.3
-- sqlite3-ruby: 
-    version: 1.3.0
-hash: b66e7e72c6405329cc80ca86e5160d6378e77f7f
-sources: 
-- Rubygems: 
-    uri: http://gemcutter.org
+PATH
+  remote: .
+  specs:
+    active_record_stash (0.1.2)
+      activemodel
+      activerecord
+      activesupport (> 3.1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activemodel (3.2.0)
+      activesupport (= 3.2.0)
+      builder (~> 3.0.0)
+    activerecord (3.2.0)
+      activemodel (= 3.2.0)
+      activesupport (= 3.2.0)
+      arel (~> 3.0.0)
+      tzinfo (~> 0.3.29)
+    activesupport (3.2.0)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    arel (3.0.0)
+    builder (3.0.0)
+    coderay (0.9.8)
+    diff-lcs (1.1.3)
+    i18n (0.6.0)
+    method_source (0.6.7)
+      ruby_parser (>= 2.3.1)
+    multi_json (1.0.4)
+    pry (0.9.7.4)
+      coderay (~> 0.9.8)
+      method_source (~> 0.6.7)
+      ruby_parser (>= 2.3.1)
+      slop (~> 2.1.0)
+    rspec (2.8.0)
+      rspec-core (~> 2.8.0)
+      rspec-expectations (~> 2.8.0)
+      rspec-mocks (~> 2.8.0)
+    rspec-core (2.8.0)
+    rspec-expectations (2.8.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.8.0)
+    ruby_parser (2.3.1)
+      sexp_processor (~> 3.0)
+    sexp_processor (3.0.10)
+    slop (2.1.0)
+    sqlite3 (1.3.5)
+    tzinfo (0.3.31)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_record_stash!
+  pry
+  rspec
+  sqlite3
