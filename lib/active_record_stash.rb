@@ -4,15 +4,15 @@ module ActiveRecord
     extend ActiveSupport::Concern
 
     NO_TARGET_ERROR = "stashing needs a target serialized column. Supply an options hash with a :in key as the last argument (e.g. stash :apple, :in => :greeter)."
-  
+
     included do
-      class_inheritable_accessor :stashed_attributes
+      class_attribute :stashed_attributes
       self.stashed_attributes = Hash.new([])
 
       after_initialize :_load_stashed_attributes
       before_save :_stash_attributes
     end
-    
+
     private
     def _load_stashed_attributes
       stashed_attributes.each_pair do |store_name,methods|
@@ -45,11 +45,11 @@ module ActiveRecord
         options = methods.extract_options!
         options.assert_valid_keys(:in)
         options.symbolize_keys!
-  
+
         unless serialized_column = options[:in]
           raise ArgumentError,  NO_TARGET_ERROR
         end
- 
+
         stashed_attributes[serialized_column] += methods.map(&:to_sym)
 
         serialize serialized_column
