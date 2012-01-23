@@ -8,7 +8,7 @@ module ActiveRecordStash
 
   included do |klass|
     class_attribute :stashed_attributes
-    klass.stashed_attributes = Hash.new([])
+    klass.stashed_attributes = {}
     klass.after_initialize :_load_stashed_attributes
     klass.before_save :_stash_attributes
   end
@@ -49,7 +49,8 @@ module ActiveRecordStash
         raise ArgumentError,  NO_TARGET_ERROR
       end
 
-      self.stashed_attributes[serialized_column] += methods.map(&:to_sym)
+      self.stashed_attributes = {}
+      self.stashed_attributes[serialized_column] = methods.map(&:to_sym)
 
       serialize serialized_column
       attr_accessor *methods

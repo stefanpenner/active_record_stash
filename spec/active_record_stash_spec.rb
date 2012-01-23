@@ -12,6 +12,13 @@ conn = {
 
 ActiveRecord::Base.establish_connection(conn)
 
+class User < ActiveRecord::Base
+  connection.create_table :users, :force => true do |t|
+    t.string :name
+    t.timestamps
+  end
+end
+
 class Email < ActiveRecord::Base
   connection.create_table :emails, :force => true do |t|
     t.string :name
@@ -84,5 +91,35 @@ describe 'ActiveRecordStash' do
       its(:address) { should match("4321 yaw elppa") }
       its(:postal_code) { should match("13244") }
     end
+  end
+  describe 'artifact cleanup between classes' do
+    it 'non-stashed object -> stashed object -> non-stashed object' do
+      email = Email.create
+      user  = User.create
+      email.reload
+      user.reload
+    end
+  end
+
+  describe 'inheritence, where child should inherit stash' do
+    subject do
+      class SpecialEmail < Email
+      end
+      SpecialEmail
+    end
+
+    its(:stashed_attributes) { should ==({data: [:phone, :address, :postal_code]}) }
+  end
+
+  describe 'inheritence, where child should NOT inherit stash' do
+    subject do
+      class SpecialEmail < Email
+        stash in: :data
+      end
+      SpecialEmail
+    end
+
+    its(:stashed_attributes) { should_not==({data: [:phone, :address, :postal_code]}) }
+    its(:stashed_attributes) { should ==({data: []}) }
   end
 end
