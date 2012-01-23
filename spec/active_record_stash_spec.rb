@@ -1,9 +1,13 @@
+require 'active_support/concern'
+require 'active_record'
+require 'active_model'
+require './lib/active_record_stash'
 
-conn = { 
+conn = {
   :adapter => 'sqlite3',
   :database => 'activerecord_unittest',
   :database => 'spec/testing.sqlite3',
-  :encoding => 'utf8' 
+  :encoding => 'utf8'
 }
 
 ActiveRecord::Base.establish_connection(conn)
@@ -19,115 +23,66 @@ class Email < ActiveRecord::Base
   stash :phone, :address, :postal_code, :in => :data
 end
 
-describe ActiveRecord::Stash do
+describe 'ActiveRecordStash' do
   describe "new object initialization" do
-    before(:all) do
-      @email = Email.new(
-        :phone        => "123456789", 
-        :address      => "1234 Apple way", 
+    subject do
+      Email.new(
+        :phone        => "123456789",
+        :address      => "1234 Apple way",
         :postal_code  => "13244"
       )
     end
 
-    it "is a valid object" do
-      @email.should be_valid
-    end
+    it { should be_valid }
+    its(:phone){       should match("123456789") }
+    its(:address){     should match("1234 Apple way") }
+    its(:postal_code){ should match("13244") }
+    its(:data){        should be_nil }
 
-    it "has all the correct forward facing attributes" do
-      @email.phone.should match("123456789")
-      @email.address.should match("1234 Apple way")
-      @email.postal_code.should match("13244")
-    end
-
-    it "has an empty data column" do
-      @email.data.should be_nil
-    end
-
-    describe "save" do 
-      it "is successful" do
-        @email.save.should be_true
-      end
-
-      it "still has the correct forward facing attributes" do
-        @email.phone.should match("123456789")
-        @email.address.should match("1234 Apple way")
-        @email.postal_code.should match("13244")
-      end
-
-      it "does not have an empty data column" do
-        @email.data.should_not be_empty
-      end
-
-      it "has the correct serialized data in the serialized column" do
-
-        @email.data.should eql({
-          :phone        =>  "123456789", 
-          :address      =>  "1234 Apple way", 
-          :postal_code  =>  "13244"
-        })
-      end
-    end
   end
 
   describe "object creation" do
-    before :all do
+    subject do
       @email = Email.create(
-        :phone        => "123456789", 
-        :address      => "1234 Apple way", 
+        :phone        => "123456789",
+        :address      => "1234 Apple way",
         :postal_code  => "13244"
       )
-    end
 
-    it "is a valid object" do
-      @email.should be_valid
+      @email.reload
     end
+    it { should be_valid }
 
-    it "still has the correct forward facing attributes" do
-      @email.phone.should match("123456789")
-      @email.address.should match("1234 Apple way")
-      @email.postal_code.should match("13244")
-    end
-    it "does not have an empty data column" do
-      @email.data.should_not be_empty
-    end
-
-    it "has the correct serialized data in the serialized column" do
-
-      @email.data.should eql({
-        :phone        =>  "123456789", 
-        :address      =>  "1234 Apple way", 
+    its(:phone)       { should match("123456789") }
+    its(:address)     { should match("1234 Apple way") }
+    its(:postal_code) { should match("13244") }
+    its(:data) do
+      should eql({
+        :phone        =>  "123456789",
+        :address      =>  "1234 Apple way",
         :postal_code  =>  "13244"
       })
     end
 
     describe "#update_attributes" do
       before :all do
-        @email.update_attributes({
+        subject.update_attributes({
           :phone   => "2222222",
           :address => "4321 yaw elppa"
         })
       end
-      it "has no errors" do
-        @email.errors.any?.should be_false
-      end
-
-      it "does not have an empty data column" do
-        @email.data.should_not be_empty
-      end
-
-      it "has all the expected contents of the data column" do
-        @email.data.should eql({
+      its(:errors) { should_not be_any }
+      its(:data)   { should_not be_empty }
+      its(:data) do
+        should eql({
           :phone   => "2222222",
           :address => "4321 yaw elppa",
           :postal_code => "13244"
         })
       end
-
-    it "still has the correct forward facing attributes" do
-      @email.phone.should match("2222222")
-      @email.address.should match("4321 yaw elppa")
-      @email.postal_code.should match("13244")
-    end
+      its(:phone)   { should match("2222222") }
+      its(:address) { should match("4321 yaw elppa") }
+      its(:postal_code) { should match("13244") }
     end
   end
 end
